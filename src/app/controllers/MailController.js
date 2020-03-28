@@ -2,32 +2,36 @@ import Mail from '../../lib/Mail';
 
 class MailController {
   async store(req, res) {
-    const { name, tel, email, subject, message } = req.body;
+    try {
+      const { name, tel, email, subject, message } = req.body;
 
-    console.log(req.body);
+      console.log(req.body);
 
-    let destinatario = '';
+      let destinatario = '';
 
-    if (subject === 'DÚVIDA') {
-      destinatario = 'antoniosobral@poli.ufrj.br';
-    } else {
-      destinatario = 'direcaosobral@gmail.com';
+      if (subject === 'DÚVIDA') {
+        destinatario = 'antoniosobral@poli.ufrj.br';
+      } else {
+        destinatario = 'direcaosobral@gmail.com';
+      }
+
+      await Mail.sendMail({
+        to: destinatario,
+        subject: `${subject}`,
+        template: 'contact',
+        context: {
+          name,
+          tel,
+          email,
+          subject,
+          message,
+        },
+      });
+
+      return res.json({ message: 'E-mail was sent.' });
+    } catch (err) {
+      console.log('problem sendind email');
     }
-
-    await Mail.sendMail({
-      to: destinatario,
-      subject: `${subject}`,
-      template: 'contact',
-      context: {
-        name,
-        tel,
-        email,
-        subject,
-        message,
-      },
-    });
-
-    return res.json({ message: 'E-mail was sent.' });
   }
 }
 
