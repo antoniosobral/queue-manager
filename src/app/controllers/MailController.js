@@ -5,8 +5,6 @@ class MailController {
     try {
       const { name, tel, email, subject, message } = req.body;
 
-      console.log(req.body);
-
       let destinatario = '';
 
       if (subject === 'DÚVIDA') {
@@ -14,6 +12,8 @@ class MailController {
       } else {
         destinatario = 'direcaosobral@gmail.com';
       }
+
+      console.log(destinatario);
 
       await Mail.sendMail({
         to: destinatario,
