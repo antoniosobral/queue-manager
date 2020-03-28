@@ -11,7 +11,7 @@ class App {
   constructor() {
     this.app = express();
 
-    this.servers = http.Server(this.app);
+    this.server = http.Server(this.app);
 
     this.socket();
 
