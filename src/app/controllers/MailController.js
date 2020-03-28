@@ -4,6 +4,8 @@ class MailController {
   async store(req, res) {
     const { name, tel, email, subject, message } = req.body;
 
+    console.log(req.body);
+
     let destinatario = '';
 
     if (subject === 'DÚVIDA') {
